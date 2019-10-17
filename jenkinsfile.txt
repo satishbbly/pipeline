@@ -29,12 +29,6 @@ pipeline{
 				}
 			}
 			stage('integration test'){
-				agent{
-					docker{
-						reuseNode false
-						image 'ubantu'
-					}
-				}
 				steps{
 					echo 'Running integration test.....'
 				}
