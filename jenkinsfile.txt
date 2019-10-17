@@ -1,0 +1,46 @@
+pipeline{
+	agent any
+		stages{
+			stage('one'){
+				steps{
+					echo 'hi, this is satish from HCL'
+				}
+			}
+			stage('two'){
+				steps{
+					input('do you want to proceed?')
+				}
+			}
+			stage('three'){
+				when{
+					not{
+						branch 'master'
+					}
+				}
+				steps{
+					echo 'Hello'
+				}
+			}
+			stage('four'){
+				parallel{
+			stage('unit test'){
+				steps{
+					echo 'Running unit test.....'
+				}
+			}
+			stage('integration test'){
+				agent{
+					docker{
+						reuseNode false
+						image 'ubantu'
+					}
+				}
+				steps{
+					echo 'Running integration test.....'
+				}
+			}
+				}
+			}
+}
+
+}
